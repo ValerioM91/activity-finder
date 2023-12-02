@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+enum GroupType {
+  SOLO
+  COUPLE
+  FRIENDS
+  FAMILY
+  BUSINESS
+}
+
+model ActivitySet {
+  id          String    @id @default(uuid())
+  city        String
+  country     String
+  groupType   GroupType
+  daysNumber  Int
+  title       String
+  description String    @db.Text
+  activities  Json
+  image       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([city, country, groupType, daysNumber])
+}

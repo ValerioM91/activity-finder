@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply min-h-0 rounded px-4 py-2 leading-normal;
+}
+
+.btn-primary {
+  @apply text-base-100;
+}
+
+[data-theme="dark"] .btn-primary {
+  @apply text-base-content;
+}
