@@ -1,5 +1,4 @@
 import type { ActivitySet } from "@prisma/client"
-// import TourCard from "./TourCard"
 import ActivitySetCard from "./ActivitySetCard"
 
 const ActivitySetList = ({ activitySets }: { activitySets?: ActivitySet[] }) => {

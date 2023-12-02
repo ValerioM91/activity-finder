@@ -1,19 +1,33 @@
-import AllActivities from "@/components/AllActivitySets"
-import { getAllActivitySets } from "@/utils/action"
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
+import AllActivitySets from "@/components/AllActivitySets"
+import Search from "@/components/Search"
+import Pagination from "@/components/Pagination"
+import { getNumberOfPages } from "@/utils/action"
+import { Suspense } from "react"
+import { CardsSkeleton } from "@/components/Skeletons"
 
-const Home = async () => {
-  const queryClient = new QueryClient()
+const Home = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string
+    page?: string
+  }
+}) => {
+  const query = searchParams?.query || ""
+  const currentPage = Number(searchParams?.page) || 1
 
-  await queryClient.prefetchQuery({
-    queryKey: ["allActivitySets"],
-    queryFn: () => getAllActivitySets(),
-  })
+  const totalPages = await getNumberOfPages(query)
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <AllActivities />
-    </HydrationBoundary>
+    <div>
+      <Search />
+      <Suspense key={query + currentPage} fallback={<CardsSkeleton />}>
+        <AllActivitySets query={query} currentPage={currentPage} />
+      </Suspense>
+      <div className="mt-8 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
+      </div>
+    </div>
   )
 }
 

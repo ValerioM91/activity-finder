@@ -8,6 +8,13 @@ const config: Config = {
       fontFamily: {
         taviraj: ["var(--taviraj)", ...fontFamily.serif],
       },
+      keyframes: {
+        shimmer: {
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+      },
     },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],

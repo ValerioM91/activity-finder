@@ -4,6 +4,7 @@ import OpenAi from "openai"
 import { activitySetSchema, type GenerateActivitySetPayload, type ActivitySetSchema } from "./schemas"
 import { createActivitySetQuery } from "./queries"
 import prisma from "./db"
+import { revalidatePath } from "next/cache"
 
 const openai = new OpenAi({ apiKey: process.env.OPENAI_API_KEY })
 
@@ -61,22 +62,17 @@ export const createNewActivitySet = async (activitySet: ActivitySetSchema) => {
   const city = activitySet.city.toUpperCase()[0] + activitySet.city.slice(1).toLowerCase()
   const country = activitySet.country.toUpperCase()[0] + activitySet.country.slice(1).toLowerCase()
 
-  return prisma.activitySet.create({
+  const newActivity = await prisma.activitySet.create({
     data: { ...activitySet, city, country, image },
   })
+
+  revalidatePath("/")
+
+  return newActivity
 }
 
-export const getAllActivitySets = async (searchTerm?: string) => {
-  if (!searchTerm) {
-    const activitySet = await prisma.activitySet.findMany({
-      orderBy: {
-        city: "asc",
-      },
-    })
-    return activitySet
-  }
-
-  const activitySet = prisma.activitySet.findMany({
+export const getNumberOfPages = async (searchTerm?: string) => {
+  const count = await prisma.activitySet.count({
     where: {
       OR: [
         {
@@ -91,9 +87,46 @@ export const getAllActivitySets = async (searchTerm?: string) => {
         },
       ],
     },
+  })
+
+  return Math.ceil(count / ITEMS_PER_PAGE)
+}
+
+const ITEMS_PER_PAGE = 6
+export const getAllActivitySets = async ({ query, currentPage }: { query?: string; currentPage: number }) => {
+  const skip = (currentPage - 1) * ITEMS_PER_PAGE
+
+  if (!query) {
+    const activitySet = await prisma.activitySet.findMany({
+      orderBy: {
+        city: "asc",
+      },
+      skip,
+      take: ITEMS_PER_PAGE,
+    })
+    return activitySet
+  }
+
+  const activitySet = prisma.activitySet.findMany({
+    where: {
+      OR: [
+        {
+          city: {
+            contains: query,
+          },
+        },
+        {
+          country: {
+            contains: query,
+          },
+        },
+      ],
+    },
     orderBy: {
       city: "asc",
     },
+    skip,
+    take: ITEMS_PER_PAGE,
   })
 
   return activitySet

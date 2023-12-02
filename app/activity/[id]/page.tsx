@@ -3,6 +3,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import ActivitySetInfo from "@/components/ActivitySetInfo"
+import { type ActivitySet } from "@prisma/client"
+import { Suspense } from "react"
 
 const SingleActivitySetPage = async ({ params }: { params: { id: string } }) => {
   const activitySet = await getSingleActivitySet(params.id)
@@ -16,6 +18,17 @@ const SingleActivitySetPage = async ({ params }: { params: { id: string } }) => 
       <Link href="/" className="btn btn-primary mb-12 h-auto">
         Back to all activities
       </Link>
+      <Suspense fallback={<div>LAODING</div>}>
+        <Info activitySet={activitySet} />
+      </Suspense>
+    </div>
+  )
+}
+export default SingleActivitySetPage
+
+const Info = ({ activitySet }: { activitySet: ActivitySet }) => {
+  return (
+    <>
       {activitySet?.image && (
         <Image
           src={activitySet.image}
@@ -27,7 +40,6 @@ const SingleActivitySetPage = async ({ params }: { params: { id: string } }) => 
         />
       )}
       <ActivitySetInfo activitySet={activitySet} />
-    </div>
+    </>
   )
 }
-export default SingleActivitySetPage
