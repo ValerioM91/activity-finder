@@ -1,14 +1,15 @@
 "use client"
 
-import { createNewActivitySet, generateActivitySetResponse, getExistingActivitySet } from "@/utils/action"
-import { generateActivitySetPayloadSchema, type GenerateActivitySetPayload } from "@/utils/schemas"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState, type FormEvent } from "react"
 import toast from "react-hot-toast"
-import ActivitySetInfo from "./ActivitySetInfo"
 import { FaMinus, FaPlus } from "react-icons/fa6"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ZodError } from "zod"
 import { GroupType } from "@prisma/client"
+
+import ActivitySetInfo from "./ActivitySetInfo"
+import { createNewActivitySet, generateActivitySetResponse, getExistingActivitySet } from "@/utils/action"
+import { generateActivitySetPayloadSchema, type GenerateActivitySetPayload } from "@/utils/schemas"
 
 const NewActivitySet = () => {
   const queryClient = useQueryClient()

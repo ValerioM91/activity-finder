@@ -31,3 +31,18 @@ export function CardsSkeleton() {
     </div>
   )
 }
+
+export function ActivitySetSkeleton() {
+  return (
+    <div className={`${shimmer} relative max-w-2xl overflow-hidden rounded`}>
+      <div className="mb-16 h-96 w-96 rounded bg-base-200" />
+      <div className="mb-4 h-12 max-w-lg rounded bg-base-200" />
+      <div className="mb-6 h-24 max-w-xl rounded bg-base-200 leading-loose" />
+      <div>
+        {new Array(3).fill(0).map((_, index) => (
+          <div key={index} className="mb-6 h-28 max-w-2xl rounded bg-base-300 p-4" />
+        ))}
+      </div>
+    </div>
+  )
+}

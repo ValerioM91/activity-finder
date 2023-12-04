@@ -1,5 +1,6 @@
-import NewActivitySet from "@/components/NewActivitySet"
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
+
+import NewActivitySet from "@/components/NewActivitySet"
 
 const NewActivitySetPage = () => {
   const queryClient = new QueryClient()

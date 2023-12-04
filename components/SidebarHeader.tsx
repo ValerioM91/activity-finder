@@ -1,5 +1,5 @@
-import ThemeToggle from "./ThemeToggle"
 import { SiOpenai } from "react-icons/si"
+import ThemeToggle from "./ThemeToggle"
 
 const SidebarHeader = () => {
   return (

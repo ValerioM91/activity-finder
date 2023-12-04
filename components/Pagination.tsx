@@ -1,10 +1,11 @@
 "use client"
 
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6"
 import clsx from "clsx"
 import Link from "next/link"
-import { generatePagination } from "@/utils/generatePagination"
 import { usePathname, useSearchParams } from "next/navigation"
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6"
+
+import { generatePagination } from "@/utils/generatePagination"
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname()

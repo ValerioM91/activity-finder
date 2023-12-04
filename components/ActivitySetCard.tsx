@@ -1,10 +1,10 @@
-import { type GroupType, type ActivitySet } from "@prisma/client"
 import Image from "next/image"
-import type { IconType } from "react-icons"
+import Link from "next/link"
 import { FaUser, FaUsers, FaBusinessTime } from "react-icons/fa6"
 import { FaUserFriends } from "react-icons/fa"
 import { MdFamilyRestroom } from "react-icons/md"
-import Link from "next/link"
+import type { IconType } from "react-icons"
+import { type GroupType, type ActivitySet } from "@prisma/client"
 
 const ActivitySetCard = ({ activitySet }: { activitySet: ActivitySet }) => {
   const { image, groupType, title, daysNumber, id } = activitySet

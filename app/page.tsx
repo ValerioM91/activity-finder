@@ -1,9 +1,10 @@
-import AllActivitySets from "@/components/AllActivitySets"
-import Search from "@/components/Search"
-import Pagination from "@/components/Pagination"
-import { getNumberOfPages } from "@/utils/action"
 import { Suspense } from "react"
+
+import AllActivitySets from "@/components/AllActivitySets"
+import Pagination from "@/components/Pagination"
+import Search from "@/components/Search"
 import { CardsSkeleton } from "@/components/Skeletons"
+import { getNumberOfPages } from "@/utils/action"
 
 const Home = async ({
   searchParams,

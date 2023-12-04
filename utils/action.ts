@@ -1,10 +1,10 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import OpenAi from "openai"
 import { activitySetSchema, type GenerateActivitySetPayload, type ActivitySetSchema } from "./schemas"
 import { createActivitySetQuery } from "./queries"
 import prisma from "./db"
-import { revalidatePath } from "next/cache"
 
 const openai = new OpenAi({ apiKey: process.env.OPENAI_API_KEY })
 

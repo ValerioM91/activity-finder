@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import { Figtree, Taviraj } from "next/font/google"
+import { FaBarsStaggered } from "react-icons/fa6"
+
 import "./globals.css"
 import Providers from "./providers"
-import { FaBarsStaggered } from "react-icons/fa6"
 import Sidebar from "@/components/Sidebar"
 import ThemeLoader from "@/components/ThemeLoader"
 
