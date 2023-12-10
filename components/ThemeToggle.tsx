@@ -1,25 +1,18 @@
 "use client"
 
 import { BsMoonFill, BsSunFill } from "react-icons/bs"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-const ThemeToggle = () => {
-  const [theme, setTheme] = useState<"light" | "dark" | undefined>("light")
+export type Theme = "light" | "dark"
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = window.localStorage.getItem("theme") as "light" | "dark"
-      const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-      document.documentElement.setAttribute("data-theme", theme)
-      setTheme(theme)
-    }
-  }, [])
+const ThemeToggle = ({ initialValue }: { initialValue?: Theme }) => {
+  const [theme, setTheme] = useState<Theme>(initialValue || "light")
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light"
+    document.cookie = "theme=" + newTheme
     document.documentElement.setAttribute("data-theme", newTheme)
     setTheme(newTheme)
-    window.localStorage.setItem("theme", newTheme)
   }
 
   if (!theme) return null

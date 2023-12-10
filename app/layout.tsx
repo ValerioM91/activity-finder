@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 import { Figtree, Taviraj } from "next/font/google"
+import { cookies } from "next/headers"
 import { FaBarsStaggered } from "react-icons/fa6"
 
 import "./globals.css"
 import Providers from "./providers"
 import Sidebar from "@/components/Sidebar"
-import ThemeLoader from "@/components/ThemeLoader"
 
 const figtree = Figtree({ subsets: ["latin"] })
 const taviraj = Taviraj({ weight: ["600"], variable: "--taviraj", subsets: ["latin"] })
@@ -16,11 +16,11 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = cookies()
+  const themeValue = cookieStore.get("theme")?.value || "light"
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <ThemeLoader />
-      </head>
+    <html lang="en" data-theme={themeValue}>
       <body className={`${figtree.className} ${taviraj.variable}`}>
         <Providers>
           <div className="drawer lg:drawer-open">
